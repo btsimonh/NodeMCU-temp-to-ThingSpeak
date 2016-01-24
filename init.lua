@@ -8,7 +8,7 @@ wifi.setmode(wifi.STATION)
 wifi.sta.config(ssid,pwd)
 
 wifi.sta.autoconnect(1)
-version = 7
+version = 8
 
 tmr.alarm(1, 1000, 1, function() 
 	if wifi.sta.getip()== nil then 
@@ -22,7 +22,7 @@ tmr.alarm(1, 1000, 1, function()
 		--start temperature readings
 		startPoll( 120000 )
 
-		tmr.alarm(1, 100000, 1, function()
+		tmr.alarm(1, 30000, 1, function()
 			loadAndRun( updatefile, updatepath, updatehost, updateport, 0)
 			end)
 
