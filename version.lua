@@ -1,6 +1,6 @@
 print("doing version check")
 oldversion = version
-newversion=6
+newversion=7
 print("oldversion:", oldversion, " newversion:", newversion)
 if (newversion ~= oldversion) then
 	print("running update.lua...")

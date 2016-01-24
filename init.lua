@@ -8,7 +8,7 @@ wifi.setmode(wifi.STATION)
 wifi.sta.config(ssid,pwd)
 
 wifi.sta.autoconnect(1)
-version = 6
+version = 7
 
 tmr.alarm(1, 1000, 1, function() 
 	if wifi.sta.getip()== nil then 
@@ -20,7 +20,7 @@ tmr.alarm(1, 1000, 1, function()
 		dofile("checkupdate.lua")
 		dofile("loadfiles.lua")
 		--start temperature readings
-		startPoll( 10000 )
+		startPoll( 120000 )
 
 		tmr.alarm(1, 100000, 1, function()
 			loadAndRun( updatefile, updatepath, updatehost, updateport, 0)
