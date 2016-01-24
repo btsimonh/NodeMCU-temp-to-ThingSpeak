@@ -41,26 +41,35 @@ function getTemp()
 	ow.reset_search(pin)
 	addr = ow.search(pin)
 
-	present = ow.reset(pin)
-	--ow.select(pin, addr)
-
 	-- to start read on ALL devices use this instead
-	ow.write(pin,0xCC,1)
-	ow.write(pin,0x44,1)
-	tmr.delay(1000000)
+	-- but we don't have the power available to trigger 5 at once
+	--present = ow.reset(pin)
+	--ow.write(pin,0xCC,1)
+	--ow.write(pin,0x44,1)
+	--tmr.delay(1000000)
 
       repeat
         tmr.wdclr()
-      
+
         if (addr ~= nil) then
-	  index = index + 1
+	  	  index = index + 1
           --print("Got Addr")
+
           crc = ow.crc8(string.sub(addr,1,7))
           if (crc == addr:byte(8)) then
             if ((addr:byte(1) == 0x10) or (addr:byte(1) == 0x28)) then
                 --print(addr:byte(1,8))
 
-                -- read just this device
+
+				--start read on each found device separately
+				-- we don't need to read quickly, and 
+				-- devices are on parasitic power
+				-- so we don't have the power available to trigger 5 at once
+				present = ow.reset(pin)
+				ow.select(pin, addr)
+				ow.write(pin,0x44,1)
+				tmr.delay(1000000)
+
                 present = ow.reset(pin)
                 ow.select(pin, addr)
                 ow.write(pin,0xBE,1)
